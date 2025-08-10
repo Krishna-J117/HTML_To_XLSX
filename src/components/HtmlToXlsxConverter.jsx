@@ -8,7 +8,6 @@ export default function HtmlToXlsxConverter() {
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-
         const reader = new FileReader();
         reader.onload = async (event) => {
             const htmlString = event.target.result;
@@ -55,7 +54,7 @@ export default function HtmlToXlsxConverter() {
         const url = URL.createObjectURL(xlsxBlob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "converted.xlsx";
+        a.download = `RM-Requirements-${ new Date().toISOString().substring(0, 10)}`;
         a.click();
         URL.revokeObjectURL(url);
     };
