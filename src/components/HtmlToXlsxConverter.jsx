@@ -14,16 +14,21 @@ export default function HtmlToXlsxConverter() {
 
             const parser = new DOMParser();
             const doc = parser.parseFromString(htmlString, "text/html");
-            const table = doc.querySelector("table");
+            const table = doc.querySelectorAll("table");
 
             if (!table) {
                 alert("No table found in the uploaded HTML file.");
                 return;
             }
 
-            const previewData = Array.from(table.rows).map((row) =>
-                Array.from(row.cells).map((cell) => cell.textContent.trim())
-            );
+            const previewData = [];
+            table.forEach(cur => {
+                const arr = Array.from(cur.rows).map((row) =>
+                    Array.from(row.cells).map((cell) => cell.textContent.trim())
+                );
+                previewData.push(...arr);
+            })
+            
             setTableData(previewData);
 
             const workbook = new ExcelJS.Workbook();
